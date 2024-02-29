@@ -1,0 +1,142 @@
+<%- include('../partials/_head.ejs') %>
+
+    <body class="p-6">
+        <!-- Navigation -->
+        <%- include('../partials/_nav.ejs') %>
+            <!-- End Navigation -->
+            <!-- Blog Detail -->
+            <% if (typeof message !='undefined' ) { %>
+                <div role="alert" class="alert alert-<%= message.type %> w-full p-6 m-auto lg:max-w-xl text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                        viewBox="0 0 24 24">
+                        <% if (message.type=='error' ) { %>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            <% } else if (message.type=='success' ) { %>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                <% } else if (message.type=='warning' ) { %>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                    <% } %>
+                    </svg>
+                    <span>
+                        <%= message.text %>
+                    </span>
+                </div>
+                <% } %>
+                    <% if (author) { %>
+                        <div class="container mx-auto bg-base rounded-box shadow-lg px-6 mt-6">
+                            <div class="flex items-center space-x-6">
+                                <img class="rounded-full w-24 object-cover object-center"
+                                    src="/uploads/<%= author.photo %>">
+                                <span class="text-5xl font-bold text-nowrap">
+                                    <%= author.name %>
+                                </span>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="space-y-6 pb-12">
+                                <span class="text-4xl font-bold text-nowrap px-6 mb-12">Blogs</span>
+                                <div class="bg-base-300 p-3 mx-3 rounded-box">
+                                    <div class="flex flex-wrap justify-center items-center">
+
+
+                                        <% blogs.forEach(blog=> { %>
+                                            <div
+                                                class="max-w-xs min-h-[600px] mx-auto bg-base-200 rounded-box overflow-hidden shadow-lg p-3 my-4">
+                                                <a href="/blog_detail/<%= blog._id %>/<%= blog.slug %>">
+                                                    <img class="w-full h-48 object-cover object-center shadow-lg rounded-box"
+                                                        src="/uploads/<%= blog.photo %>" alt="Blog Post Image">
+                                                </a>
+                                                <div class="p-6">
+                                                    <a href="/blog_detail/<%= blog._id %>/<%= blog.slug %>">
+                                                        <h2 class="text-xl font-bold mb-2 hover:underline">
+                                                            <%= blog.title %>
+                                                        </h2>
+                                                        <p class="mb-4 text-base">
+                                                            <%= blog.subtitle %>.
+                                                        </p>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-6 pb-12">
+                                <span class="text-4xl font-bold text-nowrap px-6 mb-12">About</span>
+                                <div class="p-3 mx-3 rounded-box">
+                                    <p>
+                                        <%= author.about %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap space-y-6 pb-12 md:items-center content-center">
+                                <span class="w-full h-full text-4xl font-bold text-nowrap px-6 pb-4">Contact</span>
+                                <div
+                                    class="p-3 rounded-box flex flex-wrap content-center items-center justify-around flex-1 space-y-12">
+                                    <div class="space-y-4 text-wrap max-w-md">
+                                        <!-- <p class="text-4xl text-wrap text-primary font-bold mb-12">Yazar Adı'na mesaj gönder</p> -->
+                                        <p>
+                                            <a href="mailto:mail@mail.com" class="text-xl md:text-3xl"><i
+                                                    class="fa-solid fa-envelope mr-6"></i>
+                                                <%= author.email %>
+                                            </a>
+                                        </p>
+                                        <% if (author.telephone) { %>
+                                            <p>
+                                                <a href="tel:5000000000" class="text-xl md:text-3xl"><i
+                                                        class="fa-solid fa-phone mr-6"></i><%= author.telephone %>
+                                            </p>
+                                            <% } %>
+                                                <% if (author.adress) { %>
+                                                    <p>
+                                                        <a class="text-xl md:text-3xl"><i
+                                                                class="fa-solid fa-location mr-6 "></i>
+                                                            <%= author.adress %>
+                                                        </a>
+                                                    </p>
+                                                    <% } %>
+                                    </div>
+                                    <div class="flex-1 max-w-md">
+                                        <div class="container p-6 bg-base-200 rounded-box shadow-md text-center">
+                                            <form method="POST" class="space-y-4 my-8 min-w-[150px]">
+                                                <div>
+                                                    <input type="text" placeholder="Subject" name="subject"
+                                                        class="w-full input text-lg input-bordered rounded-box" />
+                                                </div>
+                                                <div>
+                                                    <textarea
+                                                        class="w-full textarea text-lg textarea-bordered rounded-box"
+                                                        placeholder="Message" name="message"></textarea>
+
+                                                </div>
+                                                <div>
+                                                    <button type="" class="btn btn-block btn-neutral rounded-box">Send a
+                                                        message</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } else { %>
+                            <div class="container text-center mx-auto bg-base rounded-box shadow-lg px-6 mt-6">
+                                <div role="alert" class="alert alert-error w-full p-6 m-auto lg:max-w-xl text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6"
+                                        fill="none" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span>
+                                        Böyle bir kullanıcı maalesef bulunamadı
+                                    </span>
+                                </div>
+                            </div>
+                            <% } %>
+                            <%- include('../partials/_footer.ejs') %>
+
+    </body>
+
+    </html>

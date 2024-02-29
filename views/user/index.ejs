@@ -1,0 +1,46 @@
+<%- include('../partials/_head.ejs') %>
+
+  <body class="p-6">
+    <!-- Navigation -->
+    <%- include('../partials/_nav.ejs') %>
+      <!-- End Navigation -->
+      <!-- Blog Cards -->
+      <div class="flex flex-wrap justify-center items-center">
+
+        <% blogs.forEach(blog=> { %>
+          <div class="max-w-xs mx-auto bg-base-200 rounded-box overflow-hidden shadow-lg p-3 my-4 min-h-[425px]">
+            <a href="blog_detail/<%= blog._id %>/<%= blog.slug %>">
+              <img class="w-full object-cover object-center shadow-lg rounded-box max-h-[150px]"
+                src="uploads/<%= blog.photo %>" alt="Blog Post Image">
+            </a>
+            <div class="p-6">
+              <div class="min-h-[200px]">
+                <a href="blog_detail/<%= blog._id %>/<%= blog.slug %>">
+                  <h2 class="text-xl font-bold mb-2 hover:underline">
+                    <%= blog.title %>
+                  </h2>
+                  <p class="mb-4 text-base">
+                    <%= blog.subtitle.substring(0,125) %>...
+                  </p>
+                </a>
+              </div>
+              <div class="flex items-center">
+                <% if (blog.author) { %>
+                  <img class="w-8 h-8 rounded-full mr-2" src="/uploads/<%= blog.author.photo %>" alt="Author Avatar">
+                  <a href='/author_profile/<%= blog.author._id %>/<%= blog.author.slug %>'>
+                    <%= blog.author.name %>
+                  </a>
+                  <% } else { %>
+                    <img class="w-8 h-8 rounded-full mr-2" src="/uploads/pp.jpg" alt="Author Avatar">
+                    <span>Undefined</span>
+                    <% } %>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+      </div>
+      <%- include('../partials/_footer.ejs') %>
+
+  </body>
+
+  </html>

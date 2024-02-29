@@ -1,0 +1,36 @@
+<div class="navbar bg-base-200 container max-w-[750px] rounded-box mb-8">
+    <div class="flex-1">
+        <a href="/" class="btn btn-ghost text-xl">Blog</a>
+        <label class="swap swap-rotate">
+        </label>
+    </div>
+    <% if (isAuth) { %>
+        <div class="dropdown dropdown-bottom">
+            <div tabindex="0" role="button" class="btn m-1"><i class="fa-solid fa-user"></i>
+                <%= name %>
+            </div>
+            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                <% if (isAdmin) { %>
+                    <li><a href="/admin"><i class="fa-brands fa-black-tie"></i>Admin</a></li>
+                    <% } %>
+                        <% if (isAuthor || isAdmin) { %>
+                            <li><a href="/author/blogs"><i class="fa-solid fa-blog"></i>My blogs</a></li>
+                            <li><a href="/author/create_blog"><i class="fa-solid fa-blog"> +</i>New blog</a></li>
+                            <li><a href="/settings"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                            <% } else{%>
+                                <li><a href="/author_application"><i class="fa-solid fa-pen"></i>Author application</a>
+                                </li>
+                                <% }%>
+                                    <br>
+                                    <li><a href="/auth/logout" class="active"><i
+                                                class="fa-solid fa-right-from-bracket"></i>Log
+                                            out</a></li>
+            </ul>
+        </div>
+        <% } else { %>
+            <ul class="menu menu-horizontal lg:menu-horizontal bg-base-300 rounded-box space-x-2">
+                <li><a href="/auth/login" class="active">Login</a></li>
+                <li><a href="/auth/register">Register</a></li>
+            </ul>
+            <% } %>
+</div>

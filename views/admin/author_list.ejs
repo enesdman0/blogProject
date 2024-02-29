@@ -1,0 +1,53 @@
+<%- include('../partials/_head.ejs') %>
+
+    <body class="p-6">
+        <!-- Navigation -->
+        <%- include('../partials/_nav.ejs') %>
+            <!-- End Navigation -->
+            <!-- Blog Cards -->
+            <div class="flex flex-wrap justify-center items-center container">
+                <div class="overflow-x-auto w-full">
+                    <table class="table table-zebra">
+                        <!-- head -->
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>E-mail</th>
+                                <th>Date of registration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- row 1 -->
+                            <% authors.forEach(author=> { %>
+                                <tr>
+                                    <th>1</th>
+                                    <td class="max-w-[50px]"><img class="rounded-box"
+                                            src="/uploads/<%= author.photo %>" alt=""></td>
+                                            <td><a href="/author_profile/<%= author._id %>/<%= author.slug %>"><%= author.name %></a></td>
+
+                                    <td>
+                                        <%= author.email %>
+                                    </td>
+                                    <td><a href="#">
+                                            <%= author.dataCreated.toString().substring(4,15) %>
+                                        </a></td>
+<!-- 
+                                    <td><a href="#" class="underline link-success">Send mail</a></td>
+                                    <td><a href="#" class="underline link-info">Edit</a></td>
+                                    <td><a href="#" class="underline link-error">Delete</a></td> -->
+                                </tr>
+
+                                <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <%- include('../partials/_footer.ejs') %>
+
+
+    </body>
+
+    </html>
